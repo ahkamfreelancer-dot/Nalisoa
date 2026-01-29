@@ -1118,6 +1118,675 @@ input:checked + .slider:before {
 }
 
 /* ============================================
+   ACCORDION (Mon Chemin)
+   ============================================ */
+
+.accordion-card {
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    user-select: none;
+    position: relative;
+}
+
+.accordion-header:hover {
+    background: var(--bg-hover);
+    transform: translateX(5px);
+}
+
+.accordion-header h3 {
+    margin: 0;
+    flex: 1;
+}
+
+.accordion-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-dark);
+    transition: transform var(--transition-normal);
+    margin-left: var(--spacing-md);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out, opacity 0.3s ease-out;
+    padding: 0 var(--spacing-md);
+    opacity: 0;
+}
+
+.accordion-content.open {
+    max-height: 3000px;
+    padding: var(--spacing-md);
+    opacity: 1;
+    transition: max-height 0.5s ease-in, padding 0.5s ease-in, opacity 0.4s ease-in;
+}
+
+.accordion-header.open .accordion-icon {
+    transform: rotate(45deg);
+}
+
+/* Progress badge sur accordéon */
+.accordion-progress-badge {
+    background: var(--success);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: var(--spacing-sm);
+}
+
+/* ============================================
+   PROGRESS BARS PAR SECTION
+   ============================================ */
+
+.section-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-hover);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: var(--spacing-md);
+    position: relative;
+}
+
+.section-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 10px;
+    transition: width 0.6s ease-out;
+    position: relative;
+}
+
+.section-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.section-progress-text {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-xs);
+    font-weight: 500;
+}
+
+/* ============================================
+   BADGES DÉBLOQUABLES
+   ============================================ */
+
+.badges-container {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--bg-hover);
+    border-radius: var(--radius-md);
+}
+
+.badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    min-width: 100px;
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.badge.locked {
+    opacity: 0.4;
+    filter: grayscale(1);
+}
+
+.badge.unlocked {
+    animation: badgeUnlock 0.6s ease-out;
+    box-shadow: 0 0 20px rgba(232, 213, 242, 0.5);
+}
+
+@keyframes badgeUnlock {
+    0% {
+        transform: scale(0.8) rotate(-10deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.badge-icon {
+    font-size: 3rem;
+}
+
+.badge-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.badge-description {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+/* ============================================
+   ANIMATIONS CÉLÉBRATION
+   ============================================ */
+
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    animation: confettiFall 3s ease-out forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.celebration-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    text-align: center;
+    animation: celebrationPop 0.6s ease-out forwards;
+}
+
+@keyframes celebrationPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(-10deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1) rotate(5deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.celebration-message h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+    color: white;
+}
+
+.celebration-message p {
+    font-size: 1.2rem;
+    color: white;
+    opacity: 0.95;
+}
+
+/* ============================================
+   COMPLETED ANIMATIONS
+   ============================================ */
+
+.checklist-item.completed {
+    animation: checkComplete 0.4s ease-out;
+}
+
+@keyframes checkComplete {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+        background: var(--success);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Effet sparkle sur complétion */
+.sparkle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, var(--warning), var(--accent));
+    border-radius: 50%;
+    animation: sparkleEffect 0.8s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes sparkleEffect {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(3) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   MILESTONE CARDS
+   ============================================ */
+
+.milestone-card {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.milestone-card::before {
+    content: '🎉';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 120px;
+    opacity: 0.1;
+    transform: rotate(-15deg);
+}
+
+.milestone-card h3 {
+    color: white;
+    margin-bottom: var(--spacing-md);
+}
+
+.milestone-card p {
+    color: white;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+
+/* ============================================
+   CHAT KIALA BEST
+   ============================================ */
+
+/* Bulle flottante */
+.chat-bubble {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+    transition: all var(--transition-normal);
+    animation: pulse 2s infinite;
+}
+
+.chat-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 32px rgba(232, 213, 242, 0.4);
+}
+
+.chat-bubble-icon {
+    font-size: 2rem;
+}
+
+.chat-bubble-notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF6B6B;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Fenêtre de chat */
+.chat-window {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 380px;
+    max-width: calc(100vw - 40px);
+    height: 500px;
+    max-height: calc(100vh - 140px);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    animation: slideInUp 0.3s ease-out;
+}
+
+.chat-window.open {
+    display: flex;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-header-info h3 {
+    color: white;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.chat-status {
+    color: white;
+    opacity: 0.9;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.chat-close {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.chat-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.chat-message {
+    display: flex;
+    gap: var(--spacing-sm);
+    animation: messageSlide 0.3s ease-out;
+}
+
+@keyframes messageSlide {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.chat-message.user {
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.chat-message.user .message-avatar {
+    background: var(--text-secondary);
+}
+
+.message-content {
+    background: var(--bg-hover);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    max-width: 70%;
+}
+
+.chat-message.user .message-content {
+    background: var(--primary);
+    color: white;
+}
+
+.message-content p {
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.message-content p:last-child {
+    margin-bottom: 0;
+}
+
+.quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+}
+
+.quick-replies button {
+    background: white;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.quick-replies button:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.chat-input-container {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--bg-hover);
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+#chatInput {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--bg-hover);
+    border-radius: 20px;
+    font-size: 0.95rem;
+}
+
+#chatInput:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+.chat-send-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-send-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   BADGES & ACHIEVEMENTS
+   ============================================ */
+
+.badges-section {
+    margin-top: var(--spacing-xl);
+}
+
+.badges-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    text-align: center;
+}
+
+.badge.locked {
+    opacity: 0.3;
+    filter: grayscale(1);
+}
+
+.badge.unlocked {
+    animation: badgeUnlock 0.6s ease-out;
+    box-shadow: 0 0 20px rgba(232, 213, 242, 0.5);
+}
+
+@keyframes badgeUnlock {
+    0% {
+        transform: scale(0.5) rotate(-15deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+.badge-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.badge-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.badge-description {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   RESPONSIVE CHAT
+   ============================================ */
+
+@media (max-width: 480px) {
+    .chat-window {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 120px);
+        right: 10px;
+        bottom: 90px;
+    }
+    
+    .chat-bubble {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* ============================================
    UTILITY CLASSES
    ============================================ */
 
