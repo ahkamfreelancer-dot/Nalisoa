@@ -191,8 +191,14 @@ function initApp() {
     // Charger les données de toutes les sections
     loadAllSections();
     
+    // Charger l'historique du chat
+    loadChatHistory();
+    
     // Vérifier les messages spéciaux à débloquer
     checkSpecialMessages();
+    
+    // Vérifier les célébrations
+    checkCelebrationTriggers();
     
     // Sauvegarder la visite
     appState.user.lastVisit = new Date().toISOString();
@@ -1573,6 +1579,7 @@ function loadAllSections() {
     loadReconstructionChecklist();
     loadFutureVision();
     loadSpecialMessages();
+    loadAccordionStates(); // Charger l'état des accordéons
     
     // Paramètres
     loadSettings();
@@ -1592,6 +1599,462 @@ function loadSettings() {
     document.getElementById('darkModeToggle').checked = appState.settings.darkMode;
     document.getElementById('remindersToggle').checked = appState.settings.reminders;
     document.getElementById('reminderTime').value = appState.settings.reminderTime;
+}
+
+// ============================================
+// ACCORDIONS (Mon Chemin)
+// ============================================
+
+function toggleAccordion(contentId) {
+    const content = document.getElementById(contentId);
+    const header = content.previousElementSibling;
+    const icon = header.querySelector('.accordion-icon');
+    
+    // Toggle le contenu
+    content.classList.toggle('open');
+    header.classList.toggle('open');
+    
+    // Change l'icône
+    if (content.classList.contains('open')) {
+        icon.textContent = '⊖';
+    } else {
+        icon.textContent = '⊕';
+    }
+    
+    // Sauvegarder l'état
+    if (!appState.accordions) {
+        appState.accordions = {};
+    }
+    appState.accordions[contentId] = content.classList.contains('open');
+    saveState();
+}
+
+function loadAccordionStates() {
+    if (appState.accordions) {
+        Object.keys(appState.accordions).forEach(contentId => {
+            if (appState.accordions[contentId]) {
+                const content = document.getElementById(contentId);
+                if (content) {
+                    content.classList.add('open');
+                    const header = content.previousElementSibling;
+                    header.classList.add('open');
+                    const icon = header.querySelector('.accordion-icon');
+                    icon.textContent = '⊖';
+                }
+            }
+        });
+    }
+}
+
+// ============================================
+// CHAT KIALA BEST - INTELLIGENCE
+// ============================================
+
+const CHAT_RESPONSES = {
+    // Sentiments
+    greetings: [
+        "Bonjour ma belle 💜 Comment puis-je t'aider aujourd'hui ?",
+        "Hello ! Heureuse de te voir 💜 Que se passe-t-il ?",
+        "Coucou ! Je suis là pour toi. Raconte-moi."
+    ],
+    
+    sadness: [
+        "Je t'entends. C'est OK de se sentir comme ça. Tu veux qu'on en parle, ou tu préfères un moment de calme ?",
+        "Je comprends que ce soit dur. Prends une grande respiration avec moi. Tu n'es pas seule 💜",
+        "Tes émotions sont légitimes. Tu as le droit d'être triste. Je suis là."
+    ],
+    
+    happiness: [
+        "🎉 Ça me fait tellement plaisir de te voir heureuse ! Profite de ce moment !",
+        "Oui ! J'adore te voir comme ça ! Tu mérites ce bonheur 💜",
+        "Continue ! Tu rayonnes ! ✨"
+    ],
+    
+    anger: [
+        "Je comprends ta colère. Elle est légitime. Veux-tu en parler ou faire un exercice pour te calmer ?",
+        "C'est normal d'être en colère. Ne la refoule pas, mais ne la laisse pas te consumer. Je suis là.",
+        "Ta colère dit quelque chose d'important. On peut l'écouter ensemble."
+    ],
+    
+    // Encouragements
+    encouragement: [
+        "Tu es tellement plus forte que tu ne le penses. Chaque jour, tu fais des choses courageuses.",
+        "Je crois en toi. Vraiment. Tu vas y arriver 💪",
+        "Regarde tout ce que tu as déjà surmonté. Tu es une guerrière 💜",
+        "Un pas à la fois, ma belle. Pas de pression. Tu avances."
+    ],
+    
+    // Victoires
+    victory: [
+        "🎉🎉🎉 OH OUI ! Je suis TELLEMENT fière de toi !",
+        "BRAVO ! Tu vois ? Tu peux le faire ! Continue ! 🌟",
+        "Ça c'est ma championne ! Ajoute ça dans tes victoires pour te rappeler ! 💪",
+        "YES ! Chaque victoire compte ! Tu es sur le bon chemin ! ✨"
+    ],
+    
+    // Navigation
+    help: [
+        "Bien sûr ! Je peux t'aider avec :\n• 🏠 Navigation dans l'app\n• 💪 Encouragement\n• 📝 Conseils pratiques\n• 🦋 Support émotionnel\n\nQue veux-tu ?",
+        "Je suis là pour :\n✨ T'écouter\n💜 T'encourager\n📍 Te guider dans l'app\n🎯 Célébrer tes victoires\n\nComment puis-je t'aider ?"
+    ],
+    
+    linkedin: [
+        "Va dans 💼 Ma Carrière → Optimisation LinkedIn. J'ai une checklist de 10 étapes pour toi ! Veux-tu que je te guide ?",
+        "LinkedIn c'est essentiel ! Va voir la section Carrière, il y a un guide complet. Tu veux des conseils spécifiques ?"
+    ],
+    
+    job: [
+        "Pour la recherche d'emploi, va dans 💼 Ma Carrière. Il y a :\n• Routine quotidienne\n• Suivi candidatures\n• Prep entretiens\n\nTu cherches quoi précisément ?",
+        "Je sais que c'est dur. Mais 2 candidatures par jour = 60 par mois = des chances ! Va voir Ma Carrière pour t'organiser."
+    ],
+    
+    selfcare: [
+        "Prendre soin de toi n'est PAS égoïste ! Va dans ✨ Prendre Soin de Moi. Il y a plein d'idées. Tu mérites de te sentir bien 💜",
+        "Self-care = pas de culpabilité ! Va voir la section dédiée. Même 5 minutes pour toi, ça compte !"
+    ],
+    
+    // Urgence
+    crisis: [
+        "Je vois que c'est très difficile. Fais une respiration avec moi. [Bouton: Exercice 2 min]\n\nSi tu as des pensées sombres, appelle quelqu'un de confiance ou le 15 (SAMU). Tu n'es pas seule 💜",
+        "C'est OK de ne pas aller bien. Mais si tu es en détresse, parle à quelqu'un : ami, famille, ou professionnel. Le 15 est là 24/7. Je suis inquiète pour toi 💜"
+    ],
+    
+    // Questions pratiques
+    howto: [
+        "Dis-moi ce que tu veux faire et je te guide ! Navigation ? Paramètres ? Une fonction spécifique ?",
+        "Je t'aide ! Tu veux savoir comment utiliser quelle partie de l'app ?"
+    ],
+    
+    // Séparation
+    separation: [
+        "Je sais que c'est l'épreuve la plus difficile. Va voir 🦋 Mon Chemin, il y a des ressources pour toi. Tu veux en parler ?",
+        "Chaque jour qui passe, tu guéris un peu plus. Va voir Mon Chemin, ça aide. Et je suis là pour t'écouter 💜"
+    ],
+    
+    children: [
+        "Tes enfants ont de la chance de t'avoir. Tu fais de ton mieux dans une situation difficile. C'est déjà énorme 💜",
+        "Être maman ET traverser ça = tu es une héroïne. Ne l'oublie jamais. Va voir 🏡 Ma Maison pour t'organiser."
+    ],
+    
+    // Motivation
+    cantdo: [
+        "Si, tu PEUX. Peut-être pas tout aujourd'hui. Mais une petite chose. Laquelle ?",
+        "Je comprends que ça semble impossible. Mais tu as déjà fait tellement de choses impossibles. Un tout petit pas ?",
+        "OK. Pas aujourd'hui alors. Et c'est OK. Repose-toi. Demain est un autre jour 💜"
+    ],
+    
+    tired: [
+        "Tu as le droit d'être fatiguée. Tu portes beaucoup. Repose-toi si tu peux. Pas de culpabilité 💜",
+        "La fatigue est normale. Tu gères tellement ! Va dans Self-Care, prends 5 minutes pour toi."
+    ],
+    
+    // Remerciements
+    thanks: [
+        "De rien ma belle 💜 Je suis toujours là pour toi.",
+        "Avec plaisir ! Tu mérites tout le soutien du monde 💜",
+        "C'est normal ! Je suis là pour ça 💜"
+    ],
+    
+    // Default
+    default: [
+        "Je t'écoute. Continue, je suis là 💜",
+        "Dis-m'en plus. Je veux comprendre.",
+        "Je suis là. Prends ton temps pour m'expliquer.",
+        "Comment puis-je t'aider avec ça ?"
+    ]
+};
+
+let chatHistory = [];
+
+function toggleChat() {
+    const chatWindow = document.getElementById('chatWindow');
+    const chatBubble = document.getElementById('chatBubble');
+    
+    if (chatWindow.classList.contains('open')) {
+        chatWindow.classList.remove('open');
+        chatBubble.style.display = 'flex';
+    } else {
+        chatWindow.classList.add('open');
+        chatBubble.style.display = 'none';
+        
+        // Scroll vers le bas
+        setTimeout(() => {
+            const messages = document.getElementById('chatMessages');
+            messages.scrollTop = messages.scrollHeight;
+        }, 100);
+    }
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Ajouter message utilisateur
+    addChatMessage(message, 'user');
+    input.value = '';
+    
+    // Analyser et répondre
+    setTimeout(() => {
+        const response = analyzeMessage(message);
+        addChatMessage(response, 'bot');
+    }, 500);
+}
+
+function sendQuickReply(reply) {
+    sendChatMessage();
+    document.getElementById('chatInput').value = reply;
+    sendChatMessage();
+}
+
+function handleChatEnter(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+function addChatMessage(text, sender) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${sender}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = sender === 'bot' ? '💜' : '👤';
+    
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    
+    // Si c'est du HTML (avec boutons), utiliser innerHTML
+    if (text.includes('<button') || text.includes('<div')) {
+        content.innerHTML = text;
+    } else {
+        // Sinon, créer des paragraphes
+        const paragraphs = text.split('\n').filter(p => p.trim());
+        paragraphs.forEach(p => {
+            const para = document.createElement('p');
+            para.textContent = p;
+            content.appendChild(para);
+        });
+    }
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    messagesContainer.appendChild(messageDiv);
+    
+    // Sauvegarder dans l'historique
+    chatHistory.push({ text, sender, timestamp: new Date().toISOString() });
+    if (chatHistory.length > 50) chatHistory.shift(); // Garder 50 messages max
+    
+    // Scroll vers le bas
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // Sauvegarder
+    if (!appState.chatHistory) appState.chatHistory = [];
+    appState.chatHistory = chatHistory;
+    saveState();
+}
+
+function analyzeMessage(message) {
+    const msg = message.toLowerCase();
+    
+    // Mots-clés urgence
+    if (msg.includes('mourir') || msg.includes('suicide') || msg.includes('en finir') || 
+        msg.includes('plus envie') || msg.includes('disparaître')) {
+        return getRandom(CHAT_RESPONSES.crisis);
+    }
+    
+    // Sentiments
+    if (msg.includes('triste') || msg.includes('pleure') || msg.includes('mal') || 
+        msg.includes('déprim') || msg.includes('vide')) {
+        return getRandom(CHAT_RESPONSES.sadness);
+    }
+    
+    if (msg.includes('colère') || msg.includes('énerve') || msg.includes('furieuse') || 
+        msg.includes('rage')) {
+        return getRandom(CHAT_RESPONSES.anger);
+    }
+    
+    if (msg.includes('heureux') || msg.includes('bien') || msg.includes('contente') || 
+        msg.includes('joie') || msg.includes('super')) {
+        return getRandom(CHAT_RESPONSES.happiness);
+    }
+    
+    if (msg.includes('fatigue') || msg.includes('épuisée') || msg.includes('crevée')) {
+        return getRandom(CHAT_RESPONSES.tired);
+    }
+    
+    // Victoires
+    if (msg.includes('réussi') || msg.includes('j\'ai fait') || msg.includes('fière') || 
+        msg.includes('bravo') || msg.includes('youpi') || msg.includes('gagné')) {
+        return getRandom(CHAT_RESPONSES.victory);
+    }
+    
+    // Navigation
+    if (msg.includes('aide') || msg.includes('comment') || msg.includes('?')) {
+        return getRandom(CHAT_RESPONSES.help);
+    }
+    
+    if (msg.includes('linkedin')) {
+        return getRandom(CHAT_RESPONSES.linkedin);
+    }
+    
+    if (msg.includes('emploi') || msg.includes('travail') || msg.includes('candidat') || 
+        msg.includes('cv') || msg.includes('entretien')) {
+        return getRandom(CHAT_RESPONSES.job);
+    }
+    
+    if (msg.includes('prendre soin') || msg.includes('self-care') || msg.includes('bien-être')) {
+        return getRandom(CHAT_RESPONSES.selfcare);
+    }
+    
+    // Thèmes spécifiques
+    if (msg.includes('séparation') || msg.includes('divorce') || msg.includes('ex') || 
+        msg.includes('mari')) {
+        return getRandom(CHAT_RESPONSES.separation);
+    }
+    
+    if (msg.includes('enfant') || msg.includes('fils') || msg.includes('fille') || 
+        msg.includes('maman')) {
+        return getRandom(CHAT_RESPONSES.children);
+    }
+    
+    // Motivation
+    if (msg.includes('peux pas') || msg.includes('impossible') || msg.includes('y arriver')) {
+        return getRandom(CHAT_RESPONSES.cantdo);
+    }
+    
+    // Salutations
+    if (msg.includes('bonjour') || msg.includes('salut') || msg.includes('coucou') || 
+        msg.includes('hello')) {
+        return getRandom(CHAT_RESPONSES.greetings);
+    }
+    
+    // Remerciements
+    if (msg.includes('merci') || msg.includes('thank')) {
+        return getRandom(CHAT_RESPONSES.thanks);
+    }
+    
+    // Encouragement général
+    if (msg.length < 20 && (msg.includes('dur') || msg.includes('difficile'))) {
+        return getRandom(CHAT_RESPONSES.encouragement);
+    }
+    
+    // Default
+    return getRandom(CHAT_RESPONSES.default);
+}
+
+function getRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function loadChatHistory() {
+    if (appState.chatHistory && appState.chatHistory.length > 0) {
+        chatHistory = appState.chatHistory;
+        
+        // Recharger les messages (sauf le premier qui est déjà là)
+        const messagesContainer = document.getElementById('chatMessages');
+        chatHistory.slice(1).forEach(msg => {
+            // Reconstruire les messages sans les rajouter à l'historique
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${msg.sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = msg.sender === 'bot' ? '💜' : '👤';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            const para = document.createElement('p');
+            para.textContent = msg.text;
+            content.appendChild(para);
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            messagesContainer.appendChild(messageDiv);
+        });
+    }
+}
+
+// ============================================
+// CÉLÉBRATIONS & CONFETTIS
+// ============================================
+
+function triggerCelebration(message) {
+    // Créer overlay
+    const overlay = document.getElementById('celebrationOverlay');
+    
+    // Confettis
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            createConfetti();
+        }, i * 30);
+    }
+    
+    // Message célébration
+    const celebMsg = document.createElement('div');
+    celebMsg.className = 'celebration-message';
+    celebMsg.innerHTML = `
+        <h2>🎉 ${message} 🎉</h2>
+        <p>Continue comme ça !</p>
+    `;
+    overlay.appendChild(celebMsg);
+    
+    // Retirer après 3 secondes
+    setTimeout(() => {
+        celebMsg.remove();
+    }, 3000);
+}
+
+function createConfetti() {
+    const overlay = document.getElementById('celebrationOverlay');
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    
+    // Position et couleur aléatoire
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    
+    const colors = ['#E8D5F2', '#FFE5EC', '#B4E4FF', '#C8E6C9', '#FFE082'];
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    
+    overlay.appendChild(confetti);
+    
+    // Retirer après animation
+    setTimeout(() => {
+        confetti.remove();
+    }, 3000);
+}
+
+// Déclencher célébrations sur certaines actions
+function checkCelebrationTriggers() {
+    // 10 victoires
+    if (appState.victories.length === 10 && !appState.celebrated?.victories10) {
+        triggerCelebration('10 Victoires !');
+        if (!appState.celebrated) appState.celebrated = {};
+        appState.celebrated.victories10 = true;
+        saveState();
+    }
+    
+    // LinkedIn complété
+    if (appState.career.linkedinProgress === 10 && !appState.celebrated?.linkedin) {
+        triggerCelebration('LinkedIn au Top !');
+        if (!appState.celebrated) appState.celebrated = {};
+        appState.celebrated.linkedin = true;
+        saveState();
+    }
+    
+    // 7 jours d'utilisation
+    const startDate = new Date(appState.user.startDate);
+    const today = new Date();
+    const days = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+    if (days === 7 && !appState.celebrated?.week1) {
+        triggerCelebration('Une Semaine !');
+        if (!appState.celebrated) appState.celebrated = {};
+        appState.celebrated.week1 = true;
+        saveState();
+    }
 }
 
 // ============================================
