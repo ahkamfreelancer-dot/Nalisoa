@@ -247,31 +247,51 @@
                 </div>
 
                 <!-- Routine self-care -->
-                <div class="card">
-                    <h3>Ma routine bien-être quotidienne</h3>
-                    <div class="self-care-checklist" id="selfCareChecklist"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('self-care-routine-content')">
+                        <h3>Ma routine bien-être quotidienne</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="self-care-routine-content">
+                        <div class="self-care-checklist" id="selfCareChecklist"></div>
+                    </div>
                 </div>
 
                 <!-- Activités ressourçantes -->
-                <div class="card">
-                    <h3>Mes moments pour moi</h3>
-                    <p class="help-text">Liste d'activités qui te font du bien. Clique pour ajouter les tiennes.</p>
-                    <div class="activities-list" id="activitiesList"></div>
-                    <button onclick="addCustomActivity()" class="secondary-button">+ Ajouter une activité</button>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('activities-content')">
+                        <h3>Mes moments pour moi</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="activities-content">
+                        <p class="help-text">Liste d'activités qui te font du bien. Clique pour ajouter les tiennes.</p>
+                        <div class="activities-list" id="activitiesList"></div>
+                        <button onclick="addCustomActivity()" class="secondary-button">+ Ajouter une activité</button>
+                    </div>
                 </div>
 
                 <!-- Objectifs bien-être -->
-                <div class="card">
-                    <h3>Mes objectifs bien-être de la semaine</h3>
-                    <div class="goals-list" id="wellnessGoals"></div>
-                    <button onclick="addWellnessGoal()" class="secondary-button">+ Ajouter un objectif</button>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('wellness-goals-content')">
+                        <h3>Mes objectifs bien-être de la semaine</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="wellness-goals-content">
+                        <div class="goals-list" id="wellnessGoals"></div>
+                        <button onclick="addWellnessGoal()" class="secondary-button">+ Ajouter un objectif</button>
+                    </div>
                 </div>
 
                 <!-- Moments de fierté -->
-                <div class="card">
-                    <h3>Moments où je suis fière de moi 🌟</h3>
-                    <div class="pride-moments" id="prideMoments"></div>
-                    <button onclick="addPrideMoment()" class="secondary-button">+ Ajouter un moment</button>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('pride-moments-content')">
+                        <h3>Moments où je suis fière de moi 🌟</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="pride-moments-content">
+                        <div class="pride-moments" id="prideMoments"></div>
+                        <button onclick="addPrideMoment()" class="secondary-button">+ Ajouter un moment</button>
+                    </div>
                 </div>
             </section>
 
@@ -346,35 +366,60 @@
                 </div>
 
                 <!-- Optimisation LinkedIn -->
-                <div class="card">
-                    <h3>Optimisation LinkedIn</h3>
-                    <div class="checklist" id="linkedinChecklist"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('linkedin-content')">
+                        <h3>Optimisation LinkedIn</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="linkedin-content">
+                        <div class="checklist" id="linkedinChecklist"></div>
+                    </div>
                 </div>
 
                 <!-- Routine recherche emploi -->
-                <div class="card">
-                    <h3>Ma routine recherche d'emploi</h3>
-                    <div class="job-search-routine" id="jobSearchRoutine"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('job-routine-content')">
+                        <h3>Ma routine recherche d'emploi</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="job-routine-content">
+                        <div class="job-search-routine" id="jobSearchRoutine"></div>
+                    </div>
                 </div>
 
                 <!-- Suivi candidatures -->
-                <div class="card">
-                    <h3>Suivi de mes candidatures</h3>
-                    <div class="applications-tracker" id="applicationsTracker"></div>
-                    <button onclick="addApplication()" class="secondary-button">+ Nouvelle candidature</button>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('applications-content')">
+                        <h3>Suivi de mes candidatures</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="applications-content">
+                        <div class="applications-tracker" id="applicationsTracker"></div>
+                        <button onclick="addApplication()" class="secondary-button">+ Nouvelle candidature</button>
+                    </div>
                 </div>
 
                 <!-- Préparation entretiens -->
-                <div class="card">
-                    <h3>Préparation entretiens</h3>
-                    <div class="interview-prep" id="interviewPrep"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('interview-content')">
+                        <h3>Préparation entretiens</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="interview-content">
+                        <div class="interview-prep" id="interviewPrep"></div>
+                    </div>
                 </div>
 
                 <!-- Compétences à développer -->
-                <div class="card">
-                    <h3>Compétences à développer</h3>
-                    <div class="skills-development" id="skillsDevelopment"></div>
-                    <button onclick="addSkillGoal()" class="secondary-button">+ Ajouter une compétence</button>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('skills-content')">
+                        <h3>Compétences à développer</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="skills-content">
+                        <div class="skills-development" id="skillsDevelopment"></div>
+                        <button onclick="addSkillGoal()" class="secondary-button">+ Ajouter une compétence</button>
+                    </div>
                 </div>
             </section>
 
@@ -386,31 +431,51 @@
                 </div>
 
                 <!-- Étapes du deuil -->
-                <div class="card">
-                    <h3>Les étapes émotionnelles</h3>
-                    <p class="help-text">Il n'y a pas d'ordre. Tu peux revenir en arrière, sauter des étapes. C'est normal.</p>
-                    <div class="journey-stages" id="journeyStages"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('journey-stages-content')">
+                        <h3>Les étapes émotionnelles</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="journey-stages-content">
+                        <p class="help-text">Il n'y a pas d'ordre. Tu peux revenir en arrière, sauter des étapes. C'est normal.</p>
+                        <div class="journey-stages" id="journeyStages"></div>
+                    </div>
                 </div>
 
                 <!-- Aspects pratiques -->
-                <div class="card">
-                    <h3>Aspects pratiques de la séparation</h3>
-                    <div class="practical-steps" id="practicalSteps"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('practical-steps-content')">
+                        <h3>Aspects pratiques de la séparation</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="practical-steps-content">
+                        <div class="practical-steps" id="practicalSteps"></div>
+                    </div>
                 </div>
 
                 <!-- Reconstruction identité -->
-                <div class="card">
-                    <h3>Me reconstruire</h3>
-                    <div class="reconstruction-checklist" id="reconstructionChecklist"></div>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('reconstruction-content')">
+                        <h3>Me reconstruire</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="reconstruction-content">
+                        <div class="reconstruction-checklist" id="reconstructionChecklist"></div>
+                    </div>
                 </div>
 
                 <!-- Vision du futur -->
-                <div class="card">
-                    <h3>Ma vision de l'avenir</h3>
-                    <textarea 
-                        id="futureVision" 
-                        placeholder="Dans 1 an, dans 5 ans... Comment je me vois ? Qu'est-ce que je veux pour moi et mes enfants ?"
-                        onblur="saveFutureVision()"></textarea>
+                <div class="card accordion-card">
+                    <div class="accordion-header" onclick="toggleAccordion('future-vision-content')">
+                        <h3>Ma vision de l'avenir</h3>
+                        <span class="accordion-icon">⊕</span>
+                    </div>
+                    <div class="accordion-content" id="future-vision-content">
+                        <textarea 
+                            id="futureVision" 
+                            placeholder="Dans 1 an, dans 5 ans... Comment je me vois ? Qu'est-ce que je veux pour moi et mes enfants ?"
+                            onblur="saveFutureVision()"></textarea>
+                    </div>
                 </div>
 
                 <!-- Messages de soutien personnalisés -->
@@ -480,6 +545,45 @@
             <div id="exerciseContent"></div>
         </div>
     </div>
+
+    <!-- Chat Kiala Best - Bulle Flottante -->
+    <div id="chatBubble" class="chat-bubble" onclick="toggleChat()">
+        <span class="chat-bubble-icon">💜</span>
+        <span class="chat-bubble-notification" id="chatNotification" style="display: none;">1</span>
+    </div>
+
+    <!-- Chat Kiala Best - Fenêtre -->
+    <div id="chatWindow" class="chat-window">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <h3>💜 Kiala Best</h3>
+                <p class="chat-status">Toujours là pour toi</p>
+            </div>
+            <button class="chat-close" onclick="toggleChat()">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <div class="message-avatar">💜</div>
+                <div class="message-content">
+                    <p>Bonjour ma belle 💜</p>
+                    <p>Je suis Kiala Best, ton assistante personnelle. Je suis là pour t'écouter, te guider, et célébrer chaque pas que tu fais.</p>
+                    <p>Comment te sens-tu aujourd'hui ?</p>
+                    <div class="quick-replies">
+                        <button onclick="sendQuickReply('Bien')">😊 Bien</button>
+                        <button onclick="sendQuickReply('Pas terrible')">😐 Pas terrible</button>
+                        <button onclick="sendQuickReply('Difficile')">😢 Difficile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" placeholder="Écris-moi..." onkeypress="handleChatEnter(event)">
+            <button onclick="sendChatMessage()" class="chat-send-btn">➤</button>
+        </div>
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div id="celebrationOverlay" class="celebration-overlay"></div>
 
     <!-- Scripts -->
     <script src="app.js"></script>
