@@ -1273,56 +1273,180 @@ const JOURNEY_STAGES = [
     {
         name: 'Choc et déni',
         description: 'C\'est normal de ne pas y croire au début. Prends ton temps.',
-        color: '#B4E4FF'
+        color: '#B4E4FF',
+        details: [
+            '🌊 Tu as l\'impression que ce n\'est pas réel',
+            '💭 Tu te réveilles en pensant que c\'était un cauchemar',
+            '🤯 Ton cerveau refuse d\'accepter la réalité',
+            '⏸️ Le temps semble figé ou irréel',
+            '😶 Tu fonctionnes en mode automatique',
+            '🔄 Tu rejoues sans cesse les événements dans ta tête',
+            '💬 Tu as du mal à en parler aux autres',
+            '🫂 C\'est OK. C\'est une protection naturelle de ton esprit'
+        ]
     },
     {
         name: 'Colère',
         description: 'La colère est une émotion saine. Exprime-la (dans ton journal, en sport...).',
-        color: '#FFE082'
+        color: '#FFE082',
+        details: [
+            '😤 "Pourquoi moi ? C\'est injuste !"',
+            '🔥 Tu es en colère contre lui, contre toi, contre la vie',
+            '💢 Les petites choses t\'énervent plus que d\'habitude',
+            '🏃‍♀️ Utilise cette énergie : sport, écriture, art',
+            '📝 Écris une lettre de colère (sans l\'envoyer)',
+            '🥊 Frappe dans un coussin si besoin',
+            '🗣️ Crie dans ta voiture si ça aide',
+            '💜 Cette colère est légitime. Laisse-la sortir sainement'
+        ]
     },
     {
         name: 'Marchandage',
         description: '"Et si...?" Ces pensées sont normales. Laisse-les passer.',
-        color: '#FFD4B8'
+        color: '#FFD4B8',
+        details: [
+            '🤔 "Et si j\'avais fait différemment..."',
+            '🔮 "Peut-être que si je change, il reviendra"',
+            '📞 L\'envie de le contacter "juste une fois"',
+            '💭 Tu cherches des solutions pour revenir en arrière',
+            '🎭 Tu imagines des scénarios où tout redevient comme avant',
+            '⚠️ Attention : c\'est ton esprit qui négocie avec la douleur',
+            '🛑 Rappelle-toi pourquoi tu es ici',
+            '🌱 Le passé est le passé. L\'avenir est devant toi'
+        ]
     },
     {
         name: 'Tristesse',
         description: 'Pleurer est OK. C\'est même nécessaire. Ne te juge pas.',
-        color: '#E8D5F2'
+        color: '#E8D5F2',
+        details: [
+            '😢 Les larmes coulent, parfois sans raison apparente',
+            '🌧️ Tout semble gris et lourd',
+            '💔 Tu ressens un vide immense',
+            '🛏️ Sortir du lit demande un effort colossal',
+            '😔 Tu as envie de te cacher du monde',
+            '💧 Pleure autant que nécessaire. C\'est thérapeutique',
+            '🫂 Entoure-toi de personnes bienveillantes',
+            '🌈 Cette phase passera. La lumière reviendra'
+        ]
     },
     {
         name: 'Acceptation',
         description: 'Accepter ne veut pas dire oublier. C\'est juste faire la paix avec ce qui est.',
-        color: '#C8E6C9'
+        color: '#C8E6C9',
+        details: [
+            '✅ Tu commences à accepter que c\'est vraiment fini',
+            '🕊️ Tu ne cherches plus à changer le passé',
+            '💭 Tu penses à lui sans que ça te brise',
+            '🌅 Tu vois des possibilités pour ton avenir',
+            '😌 Les journées difficiles deviennent plus rares',
+            '🦋 Tu redeviens toi-même, version améliorée',
+            '💪 Tu réalises ta propre force',
+            '🌟 L\'acceptation n\'est pas la fin, c\'est un nouveau départ'
+        ]
     },
     {
         name: 'Reconstruction',
         description: 'Tu commences à voir un avenir. Tu redeviens toi-même, en mieux.',
-        color: '#FFE5EC'
+        color: '#FFE5EC',
+        details: [
+            '🏗️ Tu rebâtis ta vie selon TES valeurs',
+            '🎯 Tu as de nouveaux projets, de nouveaux rêves',
+            '💖 Tu te reconnectes avec qui tu es vraiment',
+            '🌸 Tu redécouvres tes passions',
+            '👥 Tes relations s\'améliorent',
+            '😊 Tu ris à nouveau, vraiment',
+            '🚀 Tu te projettes avec espoir',
+            '✨ Tu es plus forte qu\'avant. Tu as survécu et tu prospères'
+        ]
     }
 ];
 
 const PRACTICAL_STEPS = [
-    'Consulter un avocat pour connaître mes droits',
-    'Organiser la garde des enfants',
-    'Faire le point sur les finances',
-    'Prévenir l\'école des enfants',
-    'Informer ma famille proche',
-    'Trouver un soutien psychologique si besoin',
-    'Réorganiser le logement',
-    'Mettre à jour mes documents administratifs'
+    {
+        title: '⚖️ Consulter un avocat',
+        description: 'Connaître mes droits et les démarches légales',
+        details: 'Prends rendez-vous avec un avocat spécialisé en droit de la famille. La première consultation est souvent gratuite.'
+    },
+    {
+        title: '👶 Organiser la garde',
+        description: 'Mettre en place un planning clair pour les enfants',
+        details: 'Établis un calendrier de garde. Pense aux vacances, aux fêtes. Mets tout par écrit.'
+    },
+    {
+        title: '💰 Finances',
+        description: 'Faire le point sur ma situation financière',
+        details: 'Liste toutes tes sources de revenus et dépenses. Ouvre un compte bancaire personnel si ce n\'est pas fait.'
+    },
+    {
+        title: '🏫 Informer l\'école',
+        description: 'Prévenir l\'établissement scolaire de la situation',
+        details: 'Informe l\'école/crèche de la nouvelle organisation. Donne les nouvelles coordonnées et autorisations.'
+    },
+    {
+        title: '👨‍👩‍👧 Famille',
+        description: 'Informer mes proches de la situation',
+        details: 'Choisis à qui tu veux en parler et quand. Tu n\'es pas obligée de tout expliquer à tout le monde.'
+    },
+    {
+        title: '🧠 Soutien psy',
+        description: 'Trouver un accompagnement psychologique',
+        details: 'Psychologue, thérapeute, ou groupe de parole. Tu n\'es pas obligée de tout porter seule.'
+    },
+    {
+        title: '🏠 Logement',
+        description: 'Réorganiser mon espace de vie',
+        details: 'Qui reste où ? Partage des affaires ? Créer un nouveau "chez toi" où tu te sens bien.'
+    },
+    {
+        title: '📄 Documents',
+        description: 'Mettre à jour les papiers administratifs',
+        details: 'CAF, impôts, assurances, carte vitale... Liste tout ce qui doit être modifié.'
+    }
 ];
 
 const RECONSTRUCTION_STEPS = [
-    'Redécouvrir qui je suis sans lui',
-    'Reprendre confiance en moi',
-    'Me reconnecter avec mes amies',
-    'Retrouver mes passions',
-    'Définir mes nouvelles priorités',
-    'Me projeter dans l\'avenir',
-    'Créer de nouveaux souvenirs avec mes enfants'
+    {
+        title: '🔍 Redécouvrir qui je suis',
+        description: 'Sans lui, sans étiquette, juste moi',
+        tips: 'Qu\'est-ce que j\'aime vraiment ? Quelles sont MES valeurs ? Mes rêves ?'
+    },
+    {
+        title: '💪 Reprendre confiance',
+        description: 'Me rappeler ma valeur',
+        tips: 'Liste tes qualités, tes réussites, ce que les autres apprécient chez toi.'
+    },
+    {
+        title: '👯 Mes amies',
+        description: 'Renouer avec mon cercle social',
+        tips: 'Appelle cette amie que tu n\'as pas vue depuis longtemps. Sors, même si c\'est dur.'
+    },
+    {
+        title: '🎨 Mes passions',
+        description: 'Retrouver ce qui me fait vibrer',
+        tips: 'Ce hobby que tu avais abandonné ? Ce cours que tu voulais suivre ? Fais-le.'
+    },
+    {
+        title: '🎯 Nouvelles priorités',
+        description: 'Définir ce qui compte vraiment pour moi maintenant',
+        tips: 'Qu\'est-ce qui est important ? Carrière ? Famille ? Voyage ? Liberté ?'
+    },
+    {
+        title: '🔮 Me projeter',
+        description: 'Visualiser mon avenir',
+        tips: 'Dans 1 an, 5 ans... Comment je veux vivre ? Où ? Avec qui ?'
+    },
+    {
+        title: '❤️ M\'aimer à nouveau',
+        description: 'Apprendre à me traiter avec bienveillance',
+        tips: 'Parle-toi comme tu parlerais à ta meilleure amie. Avec douceur et encouragement.'
+    },
+    {
+        title: '🎈 Nouveaux souvenirs',
+        description: 'Créer de beaux moments avec mes enfants',
+        tips: 'Traditions, sorties, moments spéciaux. Construire une nouvelle histoire familiale.'
+    }
 ];
-
 function loadJourneyStages() {
     const container = document.getElementById('journeyStages');
     
@@ -1330,29 +1454,50 @@ function loadJourneyStages() {
         appState.journey.stages = JOURNEY_STAGES.map(stage => ({
             ...stage,
             visited: false,
-            notes: ''
+            notes: '',
+            expanded: false  // Nouveau champ pour gérer l'état ouvert/fermé
         }));
     }
     
     container.innerHTML = appState.journey.stages.map((stage, index) => `
-        <div class="card" style="border-left: 4px solid ${stage.color}; margin-bottom: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: start;">
-                <div style="flex: 1;">
-                    <h4>${stage.name}</h4>
-                    <p style="color: var(--text-secondary); margin: 0.5rem 0;">${stage.description}</p>
+        <div class="card accordion-card" style="border-left: 4px solid ${stage.color}; margin-bottom: 1rem;">
+            <div class="accordion-header" onclick="toggleJourneyStageDetails(${index})" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="flex: 1;">
+                        <h4>${stage.name}</h4>
+                        <p style="color: var(--text-secondary); margin: 0.5rem 0; font-size: 0.9rem;">${stage.description}</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button onclick="event.stopPropagation(); toggleJourneyStage(${index})" 
+                            style="background: none; padding: 5px; font-size: 1.5rem; border: none; cursor: pointer;">
+                            ${stage.visited ? '✓' : '○'}
+                        </button>
+                        <span class="accordion-icon">${stage.expanded ? '⊖' : '⊕'}</span>
+                    </div>
                 </div>
-                <button onclick="toggleJourneyStage(${index})" 
-                    style="background: none; padding: 5px; font-size: 1.5rem;">
-                    ${stage.visited ? '✓' : '○'}
-                </button>
             </div>
-            <textarea 
-                placeholder="Mes notes sur cette étape..."
-                onblur="saveJourneyNote(${index}, this.value)"
-                style="margin-top: 1rem; min-height: 60px;"
-            >${stage.notes || ''}</textarea>
+            <div class="accordion-content ${stage.expanded ? 'open' : ''}" style="margin-top: 1rem;">
+                <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    ${stage.details.map(detail => `
+                        <p style="margin: 0.5rem 0; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+                            ${detail}
+                        </p>
+                    `).join('')}
+                </div>
+                <textarea 
+                    placeholder="Mes notes sur cette étape..."
+                    onblur="saveJourneyNote(${index}, this.value)"
+                    style="min-height: 80px; width: 100%;"
+                >${stage.notes || ''}</textarea>
+            </div>
         </div>
     `).join('');
+}
+
+function toggleJourneyStageDetails(index) {
+    appState.journey.stages[index].expanded = !appState.journey.stages[index].expanded;
+    saveState();
+    loadJourneyStages();
 }
 
 function toggleJourneyStage(index) {
@@ -1371,17 +1516,42 @@ function loadPracticalSteps() {
     
     if (!appState.journey.practicalSteps) {
         appState.journey.practicalSteps = PRACTICAL_STEPS.map(step => ({
-            text: step,
-            completed: false
+            ...step,
+            completed: false,
+            expanded: false
         }));
     }
     
     container.innerHTML = appState.journey.practicalSteps.map((step, index) => `
-        <div class="checklist-item ${step.completed ? 'completed' : ''}" onclick="togglePracticalStep(${index})">
-            <div class="checklist-checkbox"></div>
-            <span>${step.text}</span>
+        <div class="card accordion-card" style="margin-bottom: 1rem;">
+            <div class="accordion-header" onclick="togglePracticalStepDetails(${index})" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="flex: 1;">
+                        <h4>${step.title}</h4>
+                        <p style="color: var(--text-secondary); margin: 0.5rem 0; font-size: 0.9rem;">${step.description}</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="checklist-checkbox ${step.completed ? 'checked' : ''}" 
+                            onclick="event.stopPropagation(); togglePracticalStep(${index})"
+                            style="cursor: pointer;">
+                        </div>
+                        <span class="accordion-icon">${step.expanded ? '⊖' : '⊕'}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-content ${step.expanded ? 'open' : ''}" style="margin-top: 1rem;">
+                <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                    <p>${step.details}</p>
+                </div>
+            </div>
         </div>
     `).join('');
+}
+
+function togglePracticalStepDetails(index) {
+    appState.journey.practicalSteps[index].expanded = !appState.journey.practicalSteps[index].expanded;
+    saveState();
+    loadPracticalSteps();
 }
 
 function togglePracticalStep(index) {
@@ -1395,25 +1565,48 @@ function loadReconstructionChecklist() {
     
     if (!appState.journey.reconstruction) {
         appState.journey.reconstruction = RECONSTRUCTION_STEPS.map(step => ({
-            text: step,
-            completed: false
+            ...step,
+            completed: false,
+            expanded: false
         }));
     }
     
     container.innerHTML = appState.journey.reconstruction.map((step, index) => `
-        <div class="checklist-item ${step.completed ? 'completed' : ''}" onclick="toggleReconstructionStep(${index})">
-            <div class="checklist-checkbox"></div>
-            <span>${step.text}</span>
+        <div class="card accordion-card" style="margin-bottom: 1rem;">
+            <div class="accordion-header" onclick="toggleReconstructionDetails(${index})" style="cursor: pointer;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <div style="flex: 1;">
+                        <h4>${step.title}</h4>
+                        <p style="color: var(--text-secondary); margin: 0.5rem 0; font-size: 0.9rem;">${step.description}</p>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="checklist-checkbox ${step.completed ? 'checked' : ''}" 
+                            onclick="event.stopPropagation(); toggleReconstructionStep(${index})"
+                            style="cursor: pointer;">
+                        </div>
+                        <span class="accordion-icon">${step.expanded ? '⊖' : '⊕'}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-content ${step.expanded ? 'open' : ''}" style="margin-top: 1rem;">
+                <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                    <p><strong>💡 Conseil :</strong> ${step.tips}</p>
+                </div>
+            </div>
         </div>
     `).join('');
 }
 
+function toggleReconstructionDetails(index) {
+    appState.journey.reconstruction[index].expanded = !appState.journey.reconstruction[index].expanded;
+    saveState();
+    loadReconstructionChecklist();
+}
 function toggleReconstructionStep(index) {
     appState.journey.reconstruction[index].completed = !appState.journey.reconstruction[index].completed;
     saveState();
     loadReconstructionChecklist();
 }
-
 function saveFutureVision() {
     const textarea = document.getElementById('futureVision');
     appState.futureVision = textarea.value;
