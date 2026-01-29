@@ -2061,7 +2061,11 @@ function checkCelebrationTriggers() {
 // DÉMARRAGE DE L'APPLICATION
 // ============================================
 
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', function() {
+    initApp();
+    // Force le chargement après 500ms au cas où
+    setTimeout(loadAllSections, 500);
+});
 
 // Sauvegarder automatiquement toutes les 30 secondes
 setInterval(saveState, 30000);
